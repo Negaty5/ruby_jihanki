@@ -21,22 +21,67 @@ class Jihanki
       puts 'そんな大金は受け取れません。'
       puts '(5000円以上は使えません。)'
       @money = 0
+    else
+      lineup
+      gakon
     end
-    gakon
   end
   end
 
- def gakon select
+ def list number,name,price
+   puts "[#{number}] : #{name}  (#{price}円)"
  end
 
- def lineup name,nedan
-   number = 1
-   while true
-     puts "[#{number}] : #{name}  (#{nedan}円)"
-     number = number + 1
-   end
+ def goods number
+   goods = []
 
+   goods.push "お茶(COOL)"  #0
+   goods.push "お茶(HOT)" #1
+   goods.push "無糖コーヒー"  #2
+   goods.push "ブレンドコーヒー"  #3
+   goods.push "ドクターペッパー"  #4
+   goods.push "綾鷹"  #5
+   goods.push "アクエリアス"  #6
+   goods.push "カロリーメイト(チーズ)"  #7
+
+   goods[number]
  end
+
+ def value number
+   value = []
+
+   value.push "110" #0
+   value.push "120" #1
+   value.push "120" #2
+   value.push "120" #3
+   value.push "100" #4
+   value.push "150" #5
+   value.push "150" #6
+   value.push "200" #7
+
+   value[number]
+ end            
+
+ def lineup
+   puts "-----欲しい商品の番号を入力して下さい。-----"
+   list(1,"#{goods(0)}　　　　　　　","#{value(0)}")
+   list(2,"#{goods(1)} 　　　　　　　","#{value(1)}")
+   list(3,"#{goods(2)}　　　　　　","#{value(2)}")
+   list(4,"#{goods(3)}　　　　","#{value(3)}")
+   list(5,"#{goods(4)}　　　　","#{value(4)}")
+   list(6,"#{goods(5)}　　　　　　　　　　","#{value(5)}")
+   list(7,"#{goods(6)}　　　　　　","#{value(6)}")
+   list(8,"#{goods(7)}　","#{value(7)}")
+   puts "[9] : 買い物を終える。"
+   puts "==> ".chomp
+ end
+
+ def gakon
+   select = gets.to_i
+   lucky_number = rand(10)
+ end
+
+
 
 #    while money.to_i >= 100
 #      puts '「お茶」、「紅茶」、「炭酸」、「コーラ」から商品を選んでください。'
@@ -75,9 +120,7 @@ end
 
 puts '自動販売機があります。'
 
-jihan = jihanki.new
+jihan = Jihanki.new
 #jihan.money
 
-jihan.lineup(お茶)
-jihan.lineup(コーヒー)
-
+puts jihan.lineup
