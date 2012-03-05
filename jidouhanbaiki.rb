@@ -22,21 +22,8 @@ class Jihanki
       puts '(5000円以上は使えません。)'
       @money = 0
     end
-    gakon
   end
   end
-
- def gakon select
- end
-
- def lineup name,nedan
-   number = 1
-   while true
-     puts "[#{number}] : #{name}  (#{nedan}円)"
-     number = number + 1
-   end
-
- end
 
 #    while money.to_i >= 100
 #      puts '「お茶」、「紅茶」、「炭酸」、「コーラ」から商品を選んでください。'
@@ -74,10 +61,4 @@ class Jihanki
 end
 
 puts '自動販売機があります。'
-
-jihan = jihanki.new
-#jihan.money
-
-jihan.lineup(お茶)
-jihan.lineup(コーヒー)
-
+Jihanki.new.money
