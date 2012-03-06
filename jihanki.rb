@@ -85,27 +85,33 @@ class Jihanki
      lineup
      select = gets.to_i
      @select = select - 1
-     lucky_number = rand(2)
+     lucky_number = rand(10)
 
      if select == 9
        puts "-----商品の選択を終了します。"
        puts "-----おつりは #{@money} 円です。"
        @money = 0
        break
-     elsif @money < value(@select)
-       puts "-----お金が足りません。"
      elsif select <= 0 || select >= 10
        puts "-----その番号はありません。1~9の範囲で選んでください。"
-     elsif lucky_number == 0
+     elsif @money < value(@select)
+       puts "-----お金が足りません。"
+       break
+     elsif lucky_number == 0 || lucky_number == 1
        2.times do
          gakon
        end
        puts "-----ラッキーなことに2本出てきました＼(＞ヮ＜)／"
        charin
+     elsif lucky_number == 2
+       puts "-----「・・・・・・・・・・・・」"
+       puts "-----反応がありません。嫌な予感がします。"
+       charin
      else
        gakon
        charin
      end
+     puts ''
    end
  end
 
@@ -117,7 +123,6 @@ class Jihanki
  def charin
        @money = @money - value(@select).to_i
        puts "-----あと #{@money} 円残っています。"
-
  end
 end
 
