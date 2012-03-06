@@ -9,22 +9,22 @@ class Jihanki
 
   def money
   while true
-    puts 'お金を入れてください。'
+    puts '-----お金を入れてください。'
     @money = @money + gets.chomp.to_i
    
     if @money == 0 
-      puts 'お金のない人に用はありません。'
-      puts 'ご利用ありがとうございました。'
+      puts '-----お金のない人に用はありません。'
+      puts '-----ご利用ありがとうございました。'
       break
     elsif @money < 10
-      puts '10円からしか受け付けません。'
+      puts '-----10円からしか受け付けません。'
       @money = 0
     elsif @money == 2000
-      puts '2000円札は使えません。'
+      puts '-----2000円札は使えません。'
       @money = 0
     elsif @money >= 5000
-      puts 'そんな大金は受け取れません。'
-      puts '(5000円以上は使えません。)'
+      puts '-----そんな大金は受け取れません。'
+      puts '-----(5000円以上は使えません。)'
       @money = 0
     else
       select
@@ -63,7 +63,7 @@ class Jihanki
    value.push "150" #6
    value.push "200" #7
 
-   value[number]
+   value[number].to_i
  end            
 
  def lineup
@@ -85,20 +85,19 @@ class Jihanki
      lineup
      select = gets.to_i
      @select = select - 1
-     lucky_number = rand(10)
+     lucky_number = rand(2)
 
      if select == 9
-       puts "商品の選択を終了します。"
+       puts "-----商品の選択を終了します。"
        puts "-----おつりは #{@money} 円です。"
        @money = 0
        break
-     elsif @money < 100
-       puts "このままだとお金が足りません。"
-       break
+     elsif @money < value(@select)
+       puts "-----お金が足りません。"
      elsif select <= 0 || select >= 10
-       puts "その番号はありません。1~9の範囲で選んでください。"
+       puts "-----その番号はありません。1~9の範囲で選んでください。"
      elsif lucky_number == 0
-       2.time do
+       2.times do
          gakon
        end
        puts "-----ラッキーなことに2本出てきました＼(＞ヮ＜)／"
