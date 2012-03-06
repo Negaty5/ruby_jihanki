@@ -2,17 +2,22 @@
 
 class Jihanki
 
+  def initialize
+    puts '自動販売機があります。'
+    @money = 0
+  end
+
   def money
   while true
     puts 'お金を入れてください。'
-    @money = gets.chomp.to_i
+    @money = @money + gets.chomp.to_i
    
     if @money == 0 
       puts 'お金のない人に用はありません。'
       puts 'ご利用ありがとうございました。'
       break
-    elsif @money < 100
-      puts '100円からしか受け付けません。'
+    elsif @money < 10
+      puts '10円からしか受け付けません。'
       @money = 0
     elsif @money == 2000
       puts '2000円札は使えません。'
@@ -22,8 +27,7 @@ class Jihanki
       puts '(5000円以上は使えません。)'
       @money = 0
     else
-      lineup
-      gakon
+      select
     end
   end
   end
@@ -63,64 +67,60 @@ class Jihanki
  end            
 
  def lineup
-   puts "-----欲しい商品の番号を入力して下さい。-----"
-   list(1,"#{goods(0)}　　　　　　　","#{value(0)}")
-   list(2,"#{goods(1)} 　　　　　　　","#{value(1)}")
-   list(3,"#{goods(2)}　　　　　　","#{value(2)}")
-   list(4,"#{goods(3)}　　　　","#{value(3)}")
-   list(5,"#{goods(4)}　　　　","#{value(4)}")
-   list(6,"#{goods(5)}　　　　　　　　　　","#{value(5)}")
-   list(7,"#{goods(6)}　　　　　　","#{value(6)}")
-   list(8,"#{goods(7)}　","#{value(7)}")
-   puts "[9] : 買い物を終える。"
-   puts "==> ".chomp
+     puts "-----欲しい商品の番号を入力して下さい。-----"
+     list(1,"#{goods(0)}              ","#{value(0)}")
+     list(2,"#{goods(1)}               ","#{value(1)}")
+     list(3,"#{goods(2)}            ","#{value(2)}")
+     list(4,"#{goods(3)}        ","#{value(3)}")
+     list(5,"#{goods(4)}        ","#{value(4)}")
+     list(6,"#{goods(5)}                    ","#{value(5)}")
+     list(7,"#{goods(6)}            ","#{value(6)}")
+     list(8,"#{goods(7)}  ","#{value(7)}")
+     puts "[9] : 商品の選択を終了する。"
+     puts "--------------------------------------------"
+ end
+ 
+ def select
+   while true
+     lineup
+     select = gets.to_i
+     @select = select - 1
+     lucky_number = rand(10)
+
+     if select == 9
+       puts "商品の選択を終了します。"
+       puts "-----おつりは #{@money} 円です。"
+       @money = 0
+       break
+     elsif @money < 100
+       puts "このままだとお金が足りません。"
+       break
+     elsif select <= 0 || select >= 10
+       puts "その番号はありません。1~9の範囲で選んでください。"
+     elsif lucky_number == 0
+       2.time do
+         gakon
+       end
+       puts "-----ラッキーなことに2本出てきました＼(＞ヮ＜)／"
+       charin
+     else
+       gakon
+       charin
+     end
+   end
  end
 
  def gakon
-   select = gets.to_i
-   lucky_number = rand(10)
+       puts "-----ガコン！"
+       puts "-----『#{goods(@select)}』を手に入れました。"
  end
 
+ def charin
+       @money = @money - value(@select).to_i
+       puts "-----あと #{@money} 円残っています。"
 
-
-#    while money.to_i >= 100
-#      puts '「お茶」、「紅茶」、「炭酸」、「コーラ」から商品を選んでください。'
-#      choice = gets.chomp
-#      
-#      lucky_number = rand(3)
-#
-#      if choice == 'お茶' || choice == '紅茶' || choice == '炭酸' || choice == 'コーラ'
-#        if lucky_number == 0
-#          2.times do
-#            puts '-----ガコン！'
-#            puts '-----『' + choice + '』' + 'を手に入れました。'
-#          end
-#          puts 'ラッキーなことに2本出てきました。'
-#        else
-#          puts '-----ガコン！'
-#          puts '-----『' + choice + '』' + 'を手に入れました。'
-#        end
-#        money = money.to_i - 100
-#        puts '残りは' + money.to_s + '円です。'
-#      else
-#        puts 'その商品はありません。'
-#      end
-#
-#      if choice == 'おつり'
-#        puts 'おつりは' + money.to_s + '円です。'
-#        break
-#      end
-#
-#      if money.to_i < 100
-#        puts 'お金が足りません。'
-#        break
-#      end
-#    end
+ end
 end
 
-puts '自動販売機があります。'
-
 jihan = Jihanki.new
-#jihan.money
-
-puts jihan.lineup
+puts jihan.money
