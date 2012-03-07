@@ -19,6 +19,9 @@ class Jihanki
     elsif @money < 10
       puts '-----10円からしか受け付けません。'
       @money = 0
+    elsif @money%10 != 0
+      puts '-----細かいお金は使えません。'
+      @money = 0
     elsif @money == 2000
       puts '-----2000円札は使えません。'
       @money = 0
