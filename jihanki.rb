@@ -8,31 +8,31 @@ class Jihanki
   end
 
   def money
-  while true
-    puts '-----お金を入れてください。'
-    @money = @money + gets.chomp.to_i
+    while true
+      puts '-----お金を入れてください。'
+      @money = @money + gets.chomp.to_i
    
-    if @money == 0 
-      puts '-----お金のない人に用はありません。'
-      puts '-----ご利用ありがとうございました。'
-      break
-    elsif @money < 10
-      puts '-----10円からしか受け付けません。'
-      @money = 0
-    elsif @money%10 != 0
-      puts '-----細かいお金は使えません。'
-      @money = 0
-    elsif @money == 2000
-      puts '-----2000円札は使えません。'
-      @money = 0
-    elsif @money >= 5000
-      puts '-----そんな大金は受け取れません。'
-      puts '-----(5000円以上は使えません。)'
-      @money = 0
-    else
-      select
+      if @money == 0 
+        puts '-----お金のない人に用はありません。'
+        puts '-----ご利用ありがとうございました。'
+        break
+      elsif @money < 10
+        puts '-----10円からしか受け付けません。'
+        @money = 0
+      elsif @money%10 != 0
+        puts '-----細かいお金は使えません。'
+        @money = 0
+      elsif @money == 2000
+        puts '-----2000円札は使えません。'
+        @money = 0
+      elsif @money >= 5000
+        puts '-----そんな大金は受け取れません。'
+        puts '-----(5000円以上は使えません。)'
+        @money = 0
+      else
+        select
+      end
     end
-  end
   end
 
  def list number,name,price
