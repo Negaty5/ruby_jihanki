@@ -44,7 +44,7 @@ class Jihanki
    goods.push "無糖コーヒー"  #2
    goods.push "ブレンドコーヒー"  #3
    goods.push "ドクターペッパー"  #4
-   goods.push "綾鷹"  #5
+   goods.push "レモンティー"  #5
    goods.push "アクエリアス"  #6
    goods.push "カロリーメイト(チーズ)"  #7
 
@@ -73,7 +73,7 @@ class Jihanki
      list(3,"#{goods(2)}            ","#{value(2)}")
      list(4,"#{goods(3)}        ","#{value(3)}")
      list(5,"#{goods(4)}        ","#{value(4)}")
-     list(6,"#{goods(5)}                    ","#{value(5)}")
+     list(6,"#{goods(5)}            ","#{value(5)}")
      list(7,"#{goods(6)}            ","#{value(6)}")
      list(8,"#{goods(7)}  ","#{value(7)}")
      puts "[9] : 商品の選択を終了する。"
