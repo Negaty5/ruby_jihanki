@@ -5,13 +5,14 @@ class Jihanki
   def initialize
     puts '自動販売機があります。'
     @money = 0
+    goods
   end
 
   def money
     while true
       puts '-----お金を入れてください。'
-      @money = @money + gets.chomp.to_i
-   
+      @money += gets.chomp.to_i
+
       if @money == 0 
         puts '-----お金のない人に用はありません。'
         puts '-----ご利用ありがとうございました。'
@@ -35,99 +36,71 @@ class Jihanki
     end
   end
 
- def list number,name,price
-   puts "[#{number}] : #{name}  (#{price}円)"
- end
+  def goods
+    @goods = {"お茶(COOL)" => 110,
+      "お茶(HOT)" => 120,
+      "無糖コーヒー"=> 120,
+      "ブレンドコーヒー" => 120,
+      "ドクターペッパー" => 100,
+      "レモンティー" => 150,
+      "アクエリアス" => 150,
+      "カロリーメイト(チーズ)" => 200}
+  end
 
- def goods number
-   goods = []
+  def lineup
+    puts "-----欲しい商品の番号を入力して下さい。-----"
+    @goods.each_with_index do |(name,value),index|
+    puts "[#{index + 1}] : #{name} (#{value}円)"
+    end
+    puts "[9] : 商品の選択を終了する。"
+    puts "--------------------------------------------"
+  end
 
-   goods.push "お茶(COOL)"  #0
-   goods.push "お茶(HOT)" #1
-   goods.push "無糖コーヒー"  #2
-   goods.push "ブレンドコーヒー"  #3
-   goods.push "ドクターペッパー"  #4
-   goods.push "レモンティー"  #5
-   goods.push "アクエリアス"  #6
-   goods.push "カロリーメイト(チーズ)"  #7
+  def select
+    while true
+      lineup
+      select = gets.to_i
+      @select = select - 1
+      lucky_number = rand(10)
 
-   goods[number]
- end
+      if select == 9
+        puts "-----商品の選択を終了します。"
+        puts "-----おつりは #{@money} 円です。"
+        @money = 0
+        break
+      elsif select <= 0 || select >= 10
+        puts "-----その番号はありません。1~9の範囲で選んでください。"
+      elsif @money < @goods.to_a[@select][1].to_i
+        puts "-----お金が足りません。"
+        break
+      elsif lucky_number == 0 || lucky_number == 1
+        2.times do
+          gakon
+        end
+        puts "-----ラッキーなことに2本出てきました＼(＞ヮ＜)／"
+        charin
+      elsif lucky_number == 2
+        puts "-----「・・・・・・・・・・・・」"
+        puts "-----反応がありません。嫌な予感がします。"
+        charin
+      else
+        gakon
+        charin
+      end
+      puts ''
+    end
+  end
 
- def value number
-   value = []
+  def gakon
+    puts "-----ガコン！"
+    puts "-----『#{@goods.to_a[@select][0]}』を手に入れました。"
+    @name = @goods.to_a[@select][0]
+  end
 
-   value.push "110" #0
-   value.push "120" #1
-   value.push "120" #2
-   value.push "120" #3
-   value.push "100" #4
-   value.push "150" #5
-   value.push "150" #6
-   value.push "200" #7
-
-   value[number].to_i
- end            
-
- def lineup
-     puts "-----欲しい商品の番号を入力して下さい。-----"
-     list(1,"#{goods(0)}              ","#{value(0)}")
-     list(2,"#{goods(1)}               ","#{value(1)}")
-     list(3,"#{goods(2)}            ","#{value(2)}")
-     list(4,"#{goods(3)}        ","#{value(3)}")
-     list(5,"#{goods(4)}        ","#{value(4)}")
-     list(6,"#{goods(5)}            ","#{value(5)}")
-     list(7,"#{goods(6)}            ","#{value(6)}")
-     list(8,"#{goods(7)}  ","#{value(7)}")
-     puts "[9] : 商品の選択を終了する。"
-     puts "--------------------------------------------"
- end
- 
- def select
-   while true
-     lineup
-     select = gets.to_i
-     @select = select - 1
-     lucky_number = rand(10)
-
-     if select == 9
-       puts "-----商品の選択を終了します。"
-       puts "-----おつりは #{@money} 円です。"
-       @money = 0
-       break
-     elsif select <= 0 || select >= 10
-       puts "-----その番号はありません。1~9の範囲で選んでください。"
-     elsif @money < value(@select)
-       puts "-----お金が足りません。"
-       break
-     elsif lucky_number == 0 || lucky_number == 1
-       2.times do
-         gakon
-       end
-       puts "-----ラッキーなことに2本出てきました＼(＞ヮ＜)／"
-       charin
-     elsif lucky_number == 2
-       puts "-----「・・・・・・・・・・・・」"
-       puts "-----反応がありません。嫌な予感がします。"
-       charin
-     else
-       gakon
-       charin
-     end
-     puts ''
-   end
- end
-
- def gakon
-       puts "-----ガコン！"
-       puts "-----『#{goods(@select)}』を手に入れました。"
- end
-
- def charin
-       @money = @money - value(@select).to_i
-       puts "-----あと #{@money} 円残っています。"
- end
+  def charin
+    @money = @money - @goods.to_a[@select][1].to_i
+    puts "-----あと #{@money} 円残っています。"
+  end
 end
 
-jihan = Jihanki.new
-puts jihan.money
+puts Jihanki.new.money
